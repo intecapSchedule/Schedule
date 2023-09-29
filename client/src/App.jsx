@@ -1,12 +1,22 @@
 import React from "react";
-import { Button } from "@nextui-org/button";
+import { Routes, Route } from "react-router-dom";
+import ContextProvider from "./context/ContextProvider.jsx";
+
+import Homepage from "./views/Homepage";
+import Login from "./views/Login";
+import NotFoundPage from "./views/NotFoundPage";
 
 const App = () => {
   return (
-    <div>
-      <h1>Pueba de Next UI</h1>
-      <Button color="primary">Botón Primario</Button>
-    </div>
+    <ContextProvider>
+      {/* <Navibar /> */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Homepage />} />
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </ContextProvider>
   );
 };
 
