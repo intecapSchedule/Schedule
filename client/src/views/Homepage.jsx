@@ -165,14 +165,14 @@ const Homepage = () => {
       <div className="w-11/12 mx-auto">
         <Table isStriped>
           <TableHeader>
-            <TableColumn>Hora</TableColumn>
-            <TableColumn>Domingo</TableColumn>
-            <TableColumn>Lunes</TableColumn>
-            <TableColumn>Martes</TableColumn>
-            <TableColumn>Miércoles</TableColumn>
-            <TableColumn>Jueves</TableColumn>
-            <TableColumn>Viernes</TableColumn>
-            <TableColumn>Sábado</TableColumn>
+            <TableColumn className="font-bold text-lg">Hora</TableColumn>
+            <TableColumn className="font-bold text-lg">Domingo</TableColumn>
+            <TableColumn className="font-bold text-lg">Lunes</TableColumn>
+            <TableColumn className="font-bold text-lg">Martes</TableColumn>
+            <TableColumn className="font-bold text-lg">Miércoles</TableColumn>
+            <TableColumn className="font-bold text-lg">Jueves</TableColumn>
+            <TableColumn className="font-bold text-lg">Viernes</TableColumn>
+            <TableColumn className="font-bold text-lg">Sábado</TableColumn>
           </TableHeader>
           <TableBody>
             {data.map((row, rowIndex) => (
