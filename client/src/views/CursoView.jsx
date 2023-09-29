@@ -45,4 +45,4 @@ const CursoView = () => {
   );
 };
 
-export default CursoView; // Cambiamos el nombre del componente
+export default CursoView;
