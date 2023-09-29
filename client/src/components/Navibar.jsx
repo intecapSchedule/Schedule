@@ -53,13 +53,6 @@ const Navibar = () => {
             </RouterLink>
           </Button>
         </NavbarItem>
-        <NavbarItem>
-          <Button className="bg-transparent hover:bg-red-300">
-            <RouterLink to={"/horarios"} className="py-2 -mx-3 px-3 flex gap-1">
-              Horarios
-            </RouterLink>
-          </Button>
-        </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden md:flex">
@@ -93,11 +86,6 @@ const Navibar = () => {
           <DropdownItem key="usuarios">
             <Link to={"/talleres"} className="pr-28 pl-3 flex gap-2">
               Talleres
-            </Link>
-          </DropdownItem>
-          <DropdownItem key="reports">
-            <Link to={"/horarios"} className="pr-28 pl-3 flex gap-2">
-              Horarios
             </Link>
           </DropdownItem>
           <DropdownItem key="logout" className="text-danger" color="danger">
