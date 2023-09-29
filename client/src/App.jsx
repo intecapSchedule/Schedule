@@ -5,11 +5,12 @@ import ContextProvider from "./context/ContextProvider.jsx";
 import Homepage from "./views/Homepage";
 import Login from "./views/Login";
 import NotFoundPage from "./views/NotFoundPage";
+import Navibar from "./components/Navibar";
 
 const App = () => {
   return (
     <ContextProvider>
-      {/* <Navibar /> */}
+      <Navibar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Homepage />} />
