@@ -24,7 +24,7 @@ const ListaCurso = ({ data }) => {
               <TableCell>{row.nombreCurso}</TableCell>
               <TableCell>{row.horario}</TableCell>
               <TableCell>
-                <Button color="primary">Ver</Button>
+                <Button color="success">Ver</Button>
               </TableCell>
               <TableCell>
                 <Button color="warning">Editar</Button>

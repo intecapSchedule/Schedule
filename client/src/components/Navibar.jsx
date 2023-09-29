@@ -47,7 +47,7 @@ const Navibar = () => {
           </Button>
         </NavbarItem>
         <NavbarItem>
-          <Button className="bg-transparent hover:bg-warning-100">
+          <Button className="bg-transparent hover:bg-purple-100">
             <RouterLink to={"/talleres"} className="py-2 -mx-3 px-3 flex gap-1">
               Talleres
             </RouterLink>

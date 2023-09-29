@@ -19,7 +19,7 @@ const CursoView = () => {
   ];
   return (
     <div className="flex w-11/12 flex-col mx-auto">
-      <Tabs color="primary">
+      <Tabs color="success">
         <Tab key="courses" title="Lista de cursos">
           <Card>
             <CardBody>
