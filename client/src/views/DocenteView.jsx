@@ -14,19 +14,19 @@ const DocenteView = () => {
     {
       fotoSrc: "https://i.pravatar.cc/150?u=b042581f4e29026024d",
       uuid: "UUID2",
-      nombreCompleto: "Ana García",
+      nombreCompleto: "Juan Pérez",
       telefono: "55512345",
     },
     {
       fotoSrc: "https://i.pravatar.cc/150?u=c042581f4e29026024d",
       uuid: "UUID3",
-      nombreCompleto: "Juan Pérez",
+      nombreCompleto: "Ana García",
       telefono: "67898765",
     },
     {
       fotoSrc: "https://i.pravatar.cc/150?u=d042581f4e29026024d",
       uuid: "UUID4",
-      nombreCompleto: "Laura Smith",
+      nombreCompleto: "Luis Smith",
       telefono: "77745678",
     },
   ];
