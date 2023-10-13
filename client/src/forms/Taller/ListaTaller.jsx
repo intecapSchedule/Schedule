@@ -1,5 +1,14 @@
 import React from "react";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button, Avatar } from "@nextui-org/react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
+  Avatar,
+} from "@nextui-org/react";
 
 const ListaTaller = ({ data }) => {
   // Cambiamos el nombre del componente
@@ -19,7 +28,7 @@ const ListaTaller = ({ data }) => {
           {data.map((row, rowIndex) => (
             <TableRow key={rowIndex}>
               <TableCell>
-                <Avatar src={row.fotoSrc} />
+                <Avatar src={row.fotoSrc} fallback />
               </TableCell>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.nombreTaller}</TableCell>
