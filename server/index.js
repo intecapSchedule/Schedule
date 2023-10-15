@@ -3,7 +3,9 @@ const cors = require("cors");
 const express = require("express");
 const connect = require("./database/connection");
 const cookieParser = require("cookie-parser");
-const routesUser = require("./routes/User/routeUser");
+const routesUser = require("./routes/routeUser");
+const routesCurso = require("./routes/routeCurso");
+const routesTaller = require("./routes/routeTaller");
 
 // TOKEN
 const authenticateToken = require("./middleware/auth");
@@ -42,7 +44,7 @@ app.use(
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.send("Api Comunidad SFA!");
+  res.send("Api Intecap Schedule!");
 });
 
 //usamos siempre el formato de JSON
@@ -50,6 +52,8 @@ app.use(express.json());
 
 //Definimons las rutas
 app.use("/api", routesUser);
+app.use("/api", routesCurso);
+app.use("/api", routesTaller);
 
 //Iniciamos el servidor
 app.listen(port, () => {

@@ -6,6 +6,18 @@ const usuarioSchema = new Schema({
     type: String,
     require: true,
   },
+  apellido: {
+    type: String,
+    require: true,
+  },
+  correo: {
+    type: String,
+    require: true,
+    unique: true,
+  },
+  cursos: {
+    type: Array,
+  },
   rol: {
     type: String,
     require: true,
@@ -18,6 +30,13 @@ const usuarioSchema = new Schema({
   contrasenia: {
     type: String,
     require: true,
+  },
+  foto: {
+    type: String,
+  },
+  estado: {
+    type: Boolean,
+    default: true,
   },
 });
 

@@ -1,15 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const Usuario = require("../../models/User/userModel");
+const Usuario = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 
 //======= crear un nuevo Usuario =======
 router.post("/user/add", async (req, res) => {
   try {
-    const { nombre, rol, username, contrasenia, foto, estado } = req.body;
+    const { nombre, apellido, correo, cursos, rol, username, contrasenia, foto, estado } = req.body;
 
     const user = new Usuario({
       nombre,
+      apellido,
+      correo,
+      cursos,
       rol,
       username,
       contrasenia,
