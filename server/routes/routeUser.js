@@ -33,22 +33,6 @@ router.post("/user/add", async (req, res) => {
   }
 });
 
-// ======= obtener todos los usuarios =======
-router.get("/user/getall/:username", async (req, res) => {
-  const { username } = req.params;
-
-  try {
-    const data = await Usuario.find({ username: { $ne: username } }).where({ estado: true });
-    // const data = await Usuario.find().where({ estado: true });
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(500).json({
-      messageDev: "No se pudo obtener los usuarios",
-      messageSys: error.message,
-    });
-  }
-});
-
 // ======= obtener un usuario por su username =======
 router.post("/user/getbyusername", async (req, res) => {
   try {

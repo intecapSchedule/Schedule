@@ -18,4 +18,4 @@ const tallerDocenteSchema = new Schema({
   },
 });
 
-const TallerDocente = mongoose.model("TallerDocente", tallerDocenteSchema);
+module.exports = mongoose.model("TallerDocente", tallerDocenteSchema);

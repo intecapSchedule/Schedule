@@ -5,16 +5,15 @@ const Curso = require("../models/cursosModel.js");
 //======= crear un nuevo Curso =======
 router.post("/curso/add", async (req, res) => {
   try {
-    const { nombre, descripcion, fechaInicio, fechaFinal, horaInicio, horaFinal, dias, foto, estado } =
-      req.body;
+    const { nombre, descripcion, fechaInicio, fechaFinal, horario, taller, dias, foto, estado } = req.body;
 
     const curso = new Curso({
       nombre,
       descripcion,
       fechaInicio,
       fechaFinal,
-      horaInicio,
-      horaFinal,
+      horario,
+      taller,
       dias,
       foto,
       estado,
@@ -34,7 +33,7 @@ router.post("/curso/add", async (req, res) => {
 });
 
 // ======= obtener todos los cursos =======
-router.get("/curso/getall/", async (req, res) => {
+router.get("/curso/getall", async (req, res) => {
   try {
     const data = await Curso.find().sort({ nombre: 1 }).where({ estado: true });
     res.status(200).json(data);

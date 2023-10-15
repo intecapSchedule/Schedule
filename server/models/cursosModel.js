@@ -11,20 +11,18 @@ const cursoSchema = new Schema({
     require: true,
   },
   fechaInicio: {
-    type: String,
+    type: Date,
     require: true,
   },
   fechaFinal: {
+    type: Date,
+    require: true,
+  },
+  horario: {
+    type: Array,
+  },
+  taller: {
     type: String,
-    require: true,
-  },
-  horaInicio: {
-    type: Array,
-    require: true,
-  },
-  horaFinal: {
-    type: Array,
-    require: true,
   },
   dias: {
     type: Array,

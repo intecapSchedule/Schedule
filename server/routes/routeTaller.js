@@ -6,8 +6,7 @@ const Taller = require("../models/tallerDocente.js");
 router.post("/taller/add", async (req, res) => {
   try {
     const { nombre, salon, capacidad, estado } = req.body;
-
-    const Taller = new Taller({
+    const taller = new Taller({
       nombre,
       salon,
       capacidad,
@@ -15,7 +14,7 @@ router.post("/taller/add", async (req, res) => {
     });
 
     // Guardar el objeto Taller en la base de datos u otras operaciones necesarias
-    const resultado = await Taller.save();
+    const resultado = await taller.save();
 
     //mandamos estado 200 de OK y el resultado de la operacion
     res.status(200).json({ message: "Taller añadido correctamente", resultado });
@@ -28,7 +27,7 @@ router.post("/taller/add", async (req, res) => {
 });
 
 // ======= obtener todos los Tallers =======
-router.get("/taller/getall/", async (req, res) => {
+router.get("/taller/getall", async (req, res) => {
   try {
     const data = await Taller.find().sort({ nombre: 1 }).where({ estado: true });
     res.status(200).json(data);
@@ -45,13 +44,13 @@ router.post("/taller/getbyid", async (req, res) => {
   try {
     const { id } = req.body;
 
-    const Taller = await Taller.find({ id });
+    const taller = await Taller.find({ id });
 
     if (!Taller) {
       return res.status(403).json({ message: "El Taller no existe" });
     }
 
-    res.status(200).json(Taller);
+    res.status(200).json(taller);
   } catch (error) {
     res.status(500).json({
       messageDev: "No se pudo obtener al Taller por el ID",
