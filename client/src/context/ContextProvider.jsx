@@ -36,6 +36,7 @@ const ContextProvider = ({ children }) => {
   }, []);
 
   const fetchUser = async (username, contrasenia) => {
+    console.log("iniciando");
     try {
       const response = await fetch(`${API_URL}/user/getbyusername`, {
         method: "POST",
@@ -80,8 +81,8 @@ const ContextProvider = ({ children }) => {
   };
 
   const USER_TYPES = {
-    ADMIN_USER: "Admin",
-    MODERATOR_USER: "Docente",
+    ADMIN_USER: "admin",
+    MODERATOR_USER: "docente",
     PUBLIC: "Public",
   };
 
