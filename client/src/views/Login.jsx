@@ -2,13 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import comunidad from "/intecap.svg";
 import { Button, Checkbox } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
+import { contexto } from "../context/ContextProvider";
 import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [password, setPassword] = useState("");
-
-  const Navigate = useNavigate();
+  const { fetchUser, loggedIn, setUsuario, setLoggedIn, usuario } = useContext(contexto);
+  const navigate = useNavigate();
 
   const handleInputChangeUser = (event) => {
     setNombreUsuario(event.target.value);
@@ -18,10 +19,38 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  const obtenerTipoUsuario = () => {
-    toast.success("Bienvenido");
-    Navigate("/home");
+  useEffect(() => {
+    const usuarioLS = localStorage.getItem("usuarioINTECAP");
+    const loggedLS = localStorage.getItem("loggedINTECAP");
+    const demasDatosLS = localStorage.getItem("demasdatosINTECAP");
+    if (usuarioLS && loggedLS) {
+      setLoggedIn(true);
+      setUsuario(JSON.parse(demasDatosLS));
+    }
+  }, []);
+
+  const obtenerTipoUsuario = async () => {
+    const respuesta = await fetchUser(nombreUsuario, password);
+    if (respuesta === "admin") {
+      navigate("/home");
+    } else if (respuesta === "docente") {
+      navigate("/home");
+    } else {
+      toast.error(respuesta);
+    }
   };
+
+  useEffect(() => {
+    if (loggedIn) {
+      if (usuario.rol === "admin") {
+        navigate("/home");
+      } else if (usuario.rol === "docente") {
+        navigate("/home");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [loggedIn, usuario]);
 
   return (
     <>
@@ -57,7 +86,9 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Contraseña
+                </label>
                 <input
                   type="password"
                   name="password"
