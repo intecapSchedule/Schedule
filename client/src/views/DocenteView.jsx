@@ -7,26 +7,40 @@ import { contexto } from "../context/ContextProvider";
 import API_URL from "../config";
 
 const DocenteView = () => {
-  const { usuario } = useContext(contexto);
-
-  const navigate = useNavigate();
-
   const [data, setData] = useState([]);
-
-  const obtenerDocentes = async () => {
-    const respuesta = await fetch(`${API_URL}/user/getall`);
-    const datos = await respuesta.json();
-    setData(datos);
-  };
+  const [loading, setLoading] = useState(true);
+  const { usuario, docentes } = useContext(contexto);
+  const navigate = useNavigate();
 
   useEffect(() => {
     obtenerDocentes();
-  }, []);
+  }, [docentes]);
 
-  console.log(data);
+  const obtenerDocentes = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/user/getall`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        console.log("Error al obtener los medicamentos");
+        throw new Error("Error al filtrar los medicamentos", {});
+      }
 
-  if (usuario === null) {
-    navigate("/");
+      const data = await response.json();
+      setData(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <h1>Cargando...</h1>;
   } else if (usuario.rol == "admin") {
     return (
       <div className="flex w-11/12 flex-col mx-auto">

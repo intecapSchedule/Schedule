@@ -6,6 +6,7 @@ export const contexto = createContext();
 const ContextProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null); // setear el tipo de usuario activo
   const [loggedIn, setLoggedIn] = useState(false); // indicar si el usuario ha iniciado sesión
+  const [docentes, setDocentes] = useState(false);
 
   const verificarExpiracionToken = () => {
     const expirationDate = localStorage.getItem("miTokenExpiration");
@@ -95,6 +96,8 @@ const ContextProvider = ({ children }) => {
         loggedIn,
         setLoggedIn,
         setUsuario,
+        docentes,
+        setDocentes,
       }}
     >
       {children}

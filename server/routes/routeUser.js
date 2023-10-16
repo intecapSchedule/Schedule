@@ -36,7 +36,9 @@ router.post("/user/add", async (req, res) => {
 // ======= obtener todos los usuarios =======
 router.get("/user/getall", async (req, res) => {
   try {
-    const usuarios = await Usuario.find({}, "nombre apellido correo cursos rol username"); // Proyecta solo nombre y apellido
+    const usuarios = await Usuario.find({}, "nombre apellido correo cursos rol username").where({
+      estado: true,
+    }); // Proyecta solo nombre y apellido
     res.status(200).json(usuarios);
   } catch (error) {
     res.status(500).json({
