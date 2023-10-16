@@ -41,7 +41,7 @@ const ListaCurso = ({ data }) => {
               <TableCell>
                 <Avatar
                   showFallback
-                  color="secondary"
+                  color="success"
                   fallback={(row?.nombre ?? "")
                     .split(" ")
                     .map((palabra) => palabra[0].toUpperCase())

@@ -175,7 +175,7 @@ const AddDocente = () => {
           )}
         </Select>
       </div>
-      <Button color="success" onClick={handleSubmit} className="w-11/12 m-auto sm:w-3/5 text-white">
+      <Button color="primary" onClick={handleSubmit} className="w-11/12 m-auto sm:w-3/5 text-white">
         Guardar
       </Button>
     </div>

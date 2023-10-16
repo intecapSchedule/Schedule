@@ -74,7 +74,7 @@ const AddTaller = () => {
           onValueChange={setCapacidad}
         />
       </div>
-      <Button onClick={handleSubmit} color="success" className="w-11/12 m-auto sm:w-3/5 text-white">
+      <Button onClick={handleSubmit} color="secondary" className="w-11/12 m-auto sm:w-3/5 text-white">
         Guardar
       </Button>
     </div>
