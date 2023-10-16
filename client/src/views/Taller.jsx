@@ -40,7 +40,7 @@ const Taller = () => {
           <Tab key="workshops" title="Lista de talleres">
             <Card>
               <CardBody>
-                <h2 className="mb-4 text-3xl text-center font-extrabold md:text-5xl lg:text-3xl dark:text-white">
+                <h2 className="mb-4 text-3xl text-center font-extrabold md:text-5xl lg:text-3xl dark:text-white text-secondary">
                   Listado de talleres o laboratorios
                 </h2>
                 <ListaTaller data={data} />
@@ -50,7 +50,7 @@ const Taller = () => {
           <Tab key="addWorkshop" title="Añadir Taller">
             <Card>
               <CardBody>
-                <h2 className="mb-4 text-3xl text-center font-extrabold md:text-5xl lg:text-3xl dark:text-white">
+                <h2 className="mb-4 text-3xl text-center font-extrabold md:text-5xl lg:text-3xl dark:text-white text-secondary">
                   Añadir nuevo taller
                 </h2>
                 <AddTaller />

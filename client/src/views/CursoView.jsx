@@ -41,7 +41,7 @@ const CursoView = () => {
           <Tab key="courses" title="Lista de cursos">
             <Card>
               <CardBody>
-                <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white">
+                <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-success">
                   Listado de cursos
                 </h2>
                 <ListaCurso data={data} />
@@ -51,7 +51,7 @@ const CursoView = () => {
           <Tab key="addCourse" title="Añadir Curso">
             <Card>
               <CardBody>
-                <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white">
+                <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-success">
                   Añadir nuevo curso
                 </h2>
                 <AddCurso />

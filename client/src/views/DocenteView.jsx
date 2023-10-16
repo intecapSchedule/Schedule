@@ -47,7 +47,7 @@ const DocenteView = () => {
             <Tab key="photos" title="Lista de docentes">
               <Card>
                 <CardBody>
-                  <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white">
+                  <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-primary">
                     Listado de docentes
                   </h2>
                   <ListaDocente data={data} />
@@ -57,7 +57,7 @@ const DocenteView = () => {
             <Tab key="music" title="Añadir Docente">
               <Card>
                 <CardBody>
-                  <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white">
+                  <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-primary">
                     Añadir nuevo docente
                   </h2>
                   <AddDocente />
