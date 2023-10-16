@@ -8,6 +8,7 @@ const ContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false); // indicar si el usuario ha iniciado sesión
   const [docentes, setDocentes] = useState(false);
   const [taller, setTaller] = useState(false);
+  const [cursos, setCursos] = useState(false);
 
   const verificarExpiracionToken = () => {
     const expirationDate = localStorage.getItem("miTokenExpiration");
@@ -100,6 +101,8 @@ const ContextProvider = ({ children }) => {
         setDocentes,
         taller,
         setTaller,
+        cursos,
+        setCursos,
       }}
     >
       {children}

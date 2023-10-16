@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import ListaTaller from "../forms/Taller/ListaTaller";
 import AddTaller from "../forms/Taller/AddTaller";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { contexto } from "../context/ContextProvider";
 import API_URL from "../config";
 
 const Taller = () => {
   const [data, setData] = useState([]);
   const { usuario, taller } = useContext(contexto);
-  const navigate = useNavigate();
 
   useEffect(() => {
     obtenerTaller();
@@ -25,8 +24,8 @@ const Taller = () => {
         credentials: "include",
       });
       if (!response.ok) {
-        console.log("Error al obtener los medicamentos");
-        throw new Error("Error al filtrar los medicamentos", {});
+        console.log("Error al obtener los cursos");
+        throw new Error("Error al filtrar los cursos", {});
       }
 
       const data = await response.json();
