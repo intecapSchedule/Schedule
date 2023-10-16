@@ -164,8 +164,7 @@ const ListaDocente = ({ data }) => {
               <ModalHeader className="flex flex-col gap-1">{usuarioSeleccionado?.nombre ?? ""}</ModalHeader>
               <ModalBody>
                 <h1 className="font-bold text-center text-xl text-gray-500">
-                  {"Información sobre " + usuarioSeleccionado?.nombre + " " + usuarioSeleccionado?.apellido ??
-                    ""}
+                  {"Información sobre " + usuarioSeleccionado?.nombre + " " + usuarioSeleccionado?.apellido ?? ""}
                 </h1>
                 <div className="flex flex-col gap-2 mt-4 w-full mx-auto">
                   <Input

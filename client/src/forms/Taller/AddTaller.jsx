@@ -1,13 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { Input, Button, CheckboxGroup, Checkbox, Select, SelectItem, Textarea } from "@nextui-org/react";
+import React, { useEffect, useState, useContext } from "react";
+import { Input, Button } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
+import API_URL from "../../config.js";
+import { contexto } from "../../context/ContextProvider.jsx";
 
 const AddTaller = () => {
   //useState para todas las variables de ingreso
   const [nombre, setNombre] = useState("");
-  const [ubicacion, setUbicacion] = useState("");
+  const [salon, setSalon] = useState("");
   const [capacidad, setCapacidad] = useState(0);
-  const [observaciones, setObservaciones] = useState("");
+  const { setTaller, taller } = useContext(contexto);
+
+  const handleSubmit = async () => {
+    if (nombre === "") {
+      toast.error("El nombre del taller es obligatorio");
+      return;
+    }
+    const datos = {
+      nombre,
+      salon,
+      capacidad,
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/taller/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al añadir el taller", {});
+      }
+      await response.json();
+      toast.success("Taller añadido correctamente");
+      setTaller(!taller);
+      //resetear los valores de los inputs
+      setNombre("");
+      setSalon("");
+      setCapacidad(0);
+    } catch (error) {
+      toast.error("Error al añadir el taller" + error);
+    }
+  };
 
   return (
     <div className="flex w-full flex-col">
@@ -17,7 +55,7 @@ const AddTaller = () => {
           type="text"
           label="Nombre del taller o laboratorio"
           isRequired
-          placeholder="Ingrese el nombre el nombre del taller o laboratorio"
+          placeholder="Ingrese el nombre del taller"
           value={nombre}
           onValueChange={setNombre}
         />
@@ -25,8 +63,8 @@ const AddTaller = () => {
           type="text"
           label="Ingrese la ubicación del salón"
           placeholder="Ingrese el salón"
-          value={ubicacion}
-          onValueChange={setUbicacion}
+          value={salon}
+          onValueChange={setSalon}
         />
         <Input
           type="number"
@@ -35,15 +73,8 @@ const AddTaller = () => {
           value={capacidad}
           onValueChange={setCapacidad}
         />
-        <Textarea
-          type="text"
-          placeholder="Ingrese alguna observación"
-          label="Observaciones"
-          value={observaciones}
-          onValueChange={setObservaciones}
-        ></Textarea>
       </div>
-      <Button color="success" className="w-11/12 m-auto sm:w-3/5 text-white">
+      <Button onClick={handleSubmit} color="success" className="w-11/12 m-auto sm:w-3/5 text-white">
         Guardar
       </Button>
     </div>
