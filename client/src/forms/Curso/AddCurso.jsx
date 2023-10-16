@@ -6,6 +6,7 @@ import { contexto } from "../../context/ContextProvider";
 import API_URL from "../../config";
 
 const AddCurso = () => {
+  //UseState de todos los campos del formulario
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
@@ -13,14 +14,16 @@ const AddCurso = () => {
   const [horarioInicio, setHorarioInicio] = useState("");
   const [horarioFinal, setHorarioFinal] = useState("");
   const [dias, setDias] = useState([]);
+
+  //Contexto para recargar la lista de cursos
   const { setCursos, cursos } = useContext(contexto);
 
-  //para los select
+  //para los select de talleres
   const [valueTaller, setValueTaller] = useState(new Set([]));
   const [talleres, setTalleres] = useState([]);
   const [tallerSeleccionado, setTallerSeleccionado] = useState("");
 
-  //para los select
+  //para los select de docentes
   const [valueDocente, setValueDocente] = useState(new Set([]));
   const [docentes, setDocentes] = useState([]);
   const [docenteSeleccionado, setDocenteSeleccionado] = useState("");
@@ -30,7 +33,7 @@ const AddCurso = () => {
   const [tallerValidado, setTallerValidado] = useState(true);
   const [docenteValidado, setDocenteValidado] = useState(true);
 
-  //fetch para cargar las comunidades
+  //fetch para cargar los talleres
   const buscarTalleres = async () => {
     try {
       const response = await fetch(`${API_URL}/taller/getall`, {
@@ -52,6 +55,7 @@ const AddCurso = () => {
     }
   };
 
+  //fetch para cargar los docentes
   const buscarDocentes = async () => {
     try {
       const response = await fetch(`${API_URL}/user/getall`, {
@@ -73,11 +77,13 @@ const AddCurso = () => {
     }
   };
 
+  //UseEffect que dispara las funcinoes de fetch para los talleres y docentes existentes
   useEffect(() => {
     buscarTalleres();
     buscarDocentes();
   }, []);
 
+  //Función final que manda a la base de datos los datos recolectados y validadados con anterioridad
   const handleSubmit = async (e) => {
     if (docenteValidado) {
       toast.error("Docente está deshabilitado hasta que ingrese los campos anteriores");
@@ -148,6 +154,20 @@ const AddCurso = () => {
       if (!response.ok) {
         throw new Error("Error al añadir el curso", {});
       }
+
+      const response2 = await fetch(`${API_URL}/user/update/${docenteSeleccionado._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cursos: datos }),
+        credentials: "include",
+      });
+
+      if (!response2.ok) {
+        throw new Error("Error al añadir el curso al docente", {});
+      }
+
       await response.json();
       toast.success("Curso añadido correctamente");
       setCursos(!cursos);
@@ -168,6 +188,7 @@ const AddCurso = () => {
     }
   };
 
+  //UseEffect para validar que todos los campos estén llenos y así habilitar el Select de docentes
   useEffect(() => {
     if (horarioFinal && horarioInicio && fechaFinal && fechaInicio && dias.length > 0) {
       setDocenteValidado(false);
@@ -176,6 +197,7 @@ const AddCurso = () => {
     }
   }, [fechaFinal, fechaInicio, horarioFinal, horarioInicio, dias]);
 
+  //UseEffect que se habilita hasta que se haya seleccionado por lo menos algún docente
   useEffect(() => {
     if (docenteSeleccionado !== "") {
       setTallerValidado(false);
