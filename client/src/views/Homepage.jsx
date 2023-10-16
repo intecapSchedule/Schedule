@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Table,
   TableHeader,
@@ -11,8 +11,13 @@ import {
   PopoverContent,
   User,
 } from "@nextui-org/react";
+import { contexto } from "../context/ContextProvider";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const Homepage = () => {
+  const { usuario } = useContext(contexto);
+  const navigate = useNavigate();
+
   const data = [
     {
       hora: "08:00 AM a 09:00 AM",
@@ -156,64 +161,71 @@ const Homepage = () => {
       ],
     },
   ];
-
-  return (
-    <div>
-      <h2 className="my-6 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white">
-        Agenda de cursos por horarios
-      </h2>
-      <div className="w-11/12 mx-auto">
-        <Table isStriped>
-          <TableHeader>
-            <TableColumn className="font-bold text-lg">Hora</TableColumn>
-            <TableColumn className="font-bold text-lg">Domingo</TableColumn>
-            <TableColumn className="font-bold text-lg">Lunes</TableColumn>
-            <TableColumn className="font-bold text-lg">Martes</TableColumn>
-            <TableColumn className="font-bold text-lg">Miércoles</TableColumn>
-            <TableColumn className="font-bold text-lg">Jueves</TableColumn>
-            <TableColumn className="font-bold text-lg">Viernes</TableColumn>
-            <TableColumn className="font-bold text-lg">Sábado</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {data.map((row, rowIndex) => (
-              <TableRow key={rowIndex} className="w-full">
-                <TableCell>{row.hora}</TableCell>
-                {row.materias.map((materia, materiaIndex) => (
-                  <TableCell key={materiaIndex}>
-                    <Popover>
-                      <PopoverTrigger>
-                        <div className="break-words cursor-pointer h-full p-2 rounded-lg hover:bg-neutral-300">
-                          {materia.nombre}
-                        </div>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <div className="px-1 py-2">
-                          <div className="text-small font-bold">{materia.nombre}</div>
-                          <User
-                            name={materia.jefeCarrera}
-                            description="Jefe de carrera"
-                            avatarProps={{
-                              src: materia.avatarSrc,
-                            }}
-                          />
-                          <div className="text-tiny">Horario: {materia.horario}</div>
-                          <div>Clase: #21</div>
-                          <div>
-                            En este curso se aprenderá sobre X y sobre Y cosas, donde también veremos Z cosas de la
-                            manera más fácil y práctica
-                          </div>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  </TableCell>
+  if (usuario) {
+    if (usuario.rol == "admin" || usuario.rol == "docente") {
+      return (
+        <div>
+          <h2 className="my-6 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white">
+            Agenda de cursos por horarios
+          </h2>
+          <div className="w-11/12 mx-auto">
+            <Table isStriped>
+              <TableHeader>
+                <TableColumn className="font-bold text-lg">Hora</TableColumn>
+                <TableColumn className="font-bold text-lg">Domingo</TableColumn>
+                <TableColumn className="font-bold text-lg">Lunes</TableColumn>
+                <TableColumn className="font-bold text-lg">Martes</TableColumn>
+                <TableColumn className="font-bold text-lg">Miércoles</TableColumn>
+                <TableColumn className="font-bold text-lg">Jueves</TableColumn>
+                <TableColumn className="font-bold text-lg">Viernes</TableColumn>
+                <TableColumn className="font-bold text-lg">Sábado</TableColumn>
+              </TableHeader>
+              <TableBody>
+                {data.map((row, rowIndex) => (
+                  <TableRow key={rowIndex} className="w-full">
+                    <TableCell>{row.hora}</TableCell>
+                    {row.materias.map((materia, materiaIndex) => (
+                      <TableCell key={materiaIndex}>
+                        <Popover>
+                          <PopoverTrigger>
+                            <div className="break-words cursor-pointer h-full p-2 rounded-lg hover:bg-neutral-300">
+                              {materia.nombre}
+                            </div>
+                          </PopoverTrigger>
+                          <PopoverContent>
+                            <div className="px-1 py-2">
+                              <div className="text-small font-bold">{materia.nombre}</div>
+                              <User
+                                name={materia.jefeCarrera}
+                                description="Jefe de carrera"
+                                avatarProps={{
+                                  src: materia.avatarSrc,
+                                }}
+                              />
+                              <div className="text-tiny">Horario: {materia.horario}</div>
+                              <div>Clase: #21</div>
+                              <div>
+                                En este curso se aprenderá sobre X y sobre Y cosas, donde también veremos Z cosas de la
+                                manera más fácil y práctica
+                              </div>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
-  );
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      );
+    } else {
+      return <Navigate to={"/"} />;
+    }
+  } else {
+      return <Navigate to={"/"} />;
+  }
 };
 
 export default Homepage;
