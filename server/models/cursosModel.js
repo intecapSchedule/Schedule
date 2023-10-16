@@ -24,6 +24,9 @@ const cursoSchema = new Schema({
   taller: {
     type: String,
   },
+  docente: {
+    type: String,
+  },
   dias: {
     type: Array,
   },

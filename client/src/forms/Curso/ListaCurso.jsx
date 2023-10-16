@@ -21,7 +21,6 @@ const ListaCurso = ({ data }) => {
       <Table isStriped>
         <TableHeader>
           <TableColumn className="font-bold text-lg">Ícono</TableColumn>
-          <TableColumn className="font-bold text-lg">ID Curso</TableColumn>
           <TableColumn className="font-bold text-lg">Nombre Curso</TableColumn>
           <TableColumn className="font-bold text-lg">Duración</TableColumn>
           <TableColumn className="font-bold text-lg">Horario</TableColumn>
@@ -31,6 +30,7 @@ const ListaCurso = ({ data }) => {
           <TableColumn className="font-bold text-lg" width={3}>
             Taller/Laboratorio
           </TableColumn>
+          <TableColumn className="font-bold text-lg">Docente</TableColumn>
           <TableColumn className="font-bold text-lg text-center" align="center">
             Ver
           </TableColumn>
@@ -48,7 +48,6 @@ const ListaCurso = ({ data }) => {
                     .join("")}
                 />
               </TableCell>
-              <TableCell>{row._id.slice(-6)}</TableCell>
               <TableCell>{row?.nombre ?? ""}</TableCell>
               <TableCell>
                 <div>
@@ -63,8 +62,9 @@ const ListaCurso = ({ data }) => {
               </TableCell>
               <TableCell>
                 <div className="flex gap-1 flex-wrap">
-                  {row?.dias.map((dia) => (
+                  {row?.dias.map((dia, idx) => (
                     <Chip
+                      key={idx}
                       classNames={{
                         base: `${
                           dia === "Lunes"
@@ -92,6 +92,7 @@ const ListaCurso = ({ data }) => {
                 </div>
               </TableCell>
               <TableCell>{row?.taller ?? ""}</TableCell>
+              <TableCell>{row?.docente ?? ""}</TableCell>
               <TableCell>
                 <Button color="success">Ver</Button>
               </TableCell>
