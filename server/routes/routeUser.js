@@ -249,13 +249,12 @@ router.delete("/user/deleteCursoEspecifico", async (req, res) => {
 
     // Iterar a través de los docentes y eliminar el curso específico de cada uno
     const promises = docentes.map(async (docente) => {
-      console.log(docente);
       docente.cursos = docente.cursos.filter((curso) => {
         return !(
           curso.nombre === nombre &&
           curso.descripcion === descripcion &&
           curso.taller === taller &&
-          curso.docente === docente
+          curso.docente === docente.nombre
         );
       });
       await docente.save();
