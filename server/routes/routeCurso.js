@@ -96,16 +96,18 @@ router.put("/curso/update/:id", async (req, res) => {
 });
 
 // ======= eliminar un curso por su id =======
-router.put("/curso/delete/:id", async (req, res) => {
+router.delete("/curso/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const data = req.body;
-    const options = { new: true };
-    const resultado = await Curso.findByIdAndUpdate(id, data, options);
-    res.status(200).json({ message: "Curso Eliminado correctamente", resultado });
+    const resultado = await Curso.findByIdAndRemove(id);
+    if (resultado) {
+      res.status(200).json({ message: "Curso Eliminado correctamente", resultado });
+    } else {
+      res.status(404).json({ message: "Curso no encontrado" });
+    }
   } catch (error) {
     res.status(500).json({
-      messageDev: "No se pudo eliminar al Curso",
+      messageDev: "No se pudo eliminar el Curso",
       messageSys: error.message,
     });
   }

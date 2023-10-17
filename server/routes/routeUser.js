@@ -232,4 +232,44 @@ function isWithinRange(value, min, max) {
   return value >= min && value <= max;
 }
 
+// Ruta para eliminar un curso específico de los registros de docentes
+router.delete("/user/deleteCursoEspecifico", async (req, res) => {
+  try {
+    const { nombre, descripcion, docente, taller } = req.body;
+    // Buscar todos los docentes que tengan cursos con las 4 condiciones dadas
+    const docentes = await Usuario.find({
+      cursos: { $elemMatch: { nombre, descripcion, taller, docente } },
+    });
+
+    // console.log(docentes);
+
+    if (docentes.length === 0) {
+      return res.status(200).json({ message: "No se encontraron docentes con los cursos específicos" });
+    }
+
+    // Iterar a través de los docentes y eliminar el curso específico de cada uno
+    const promises = docentes.map(async (docente) => {
+      console.log(docente);
+      docente.cursos = docente.cursos.filter((curso) => {
+        return !(
+          curso.nombre === nombre &&
+          curso.descripcion === descripcion &&
+          curso.taller === taller &&
+          curso.docente === docente
+        );
+      });
+      await docente.save();
+    });
+
+    await Promise.all(promises);
+
+    res.status(200).json({ message: "Curso eliminado correctamente de los docentes correspondientes" });
+  } catch (error) {
+    res.status(500).json({
+      messageDev: "No se pudo eliminar el curso de los docentes",
+      messageSys: error.message,
+    });
+  }
+});
+
 module.exports = router;
