@@ -21,6 +21,8 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
+  CheckboxGroup,
+  Checkbox,
 } from "@nextui-org/react";
 import API_URL from "../../config.js";
 import toast, { Toaster } from "react-hot-toast";
@@ -42,7 +44,10 @@ const ListaDocente = ({ data }) => {
   const [valueUsuario, setValueUsuario] = useState(roles);
   const [usuarios, setUsuarios] = useState(null);
 
+  const [cursosSeleccionados, setCursosSeleccionados] = useState([]);
+
   const [popOver, setPopOver] = useState(false);
+  const [popOver2, setPopOver2] = useState(false);
 
   const { setDocentes, docentes } = useContext(contexto);
 
@@ -114,6 +119,39 @@ const ListaDocente = ({ data }) => {
     }
   };
 
+  const EliminarCursosSeleccionados = async () => {
+    const objetosNoRepetidos = usuarioSeleccionado.cursos.filter((objetoPrincipal) => {
+      // Compara cada objeto del array principal con los del segundo array
+      return !cursosSeleccionados.some((objetoSegundo) => {
+        // Compara las propiedades clave (en este caso, nombre) de los objetos
+        return objetoPrincipal.nombre === objetoSegundo.nombre;
+      });
+    });
+    // console.log(objetosNoRepetidos);
+
+    try {
+      const response = await fetch(`${API_URL}/user/update/${usuarioSeleccionado?._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ cursos: objetosNoRepetidos }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al elminar cursos del docente", {});
+      }
+      await response.json();
+      toast.success("Docente actualizado correctamente");
+      setDocentes(!docentes);
+      onOpenChange();
+    } catch (error) {
+      toast.error("Error al actualizar el docente" + error);
+    }
+    setCursosSeleccionados([]);
+  };
+
   return (
     <div className="w-full mx-auto">
       <Toaster />
@@ -146,6 +184,7 @@ const ListaDocente = ({ data }) => {
                   onClick={() => {
                     setUsuarioSeleccionado(row);
                     ActualizarDatos(row);
+                    setCursosSeleccionados([]);
                     onOpen();
                   }}
                   color="primary"
@@ -223,44 +262,83 @@ const ListaDocente = ({ data }) => {
                       <h1 className="font-bold text-center mx-auto text-2xl">Cursos a cargo</h1>
                     )}
                     <div className="flex flex-col gap-2">
-                      {usuarioSeleccionado?.cursos?.map((curso, index) => (
-                        <div key={index} className="bg-slate-200 p-4 rounded-lg">
-                          <h2>
-                            <span className="font-bold">Nombre:</span> {curso?.nombre ?? ""}
-                          </h2>
-                          <h2>
-                            <span className="font-bold">Descripcion: </span>
-                            {curso?.descripcion ?? ""}
-                          </h2>
-                          <h2>
-                            <span className="font-bold">Fecha Inicio:</span>{" "}
-                            {format(addDays(new Date(curso?.fechaInicio), 1), "dd-MM-yyyy") ?? ""}
-                          </h2>
-                          <h2>
-                            <span className="font-bold">Fecha Final:</span>{" "}
-                            {format(addDays(new Date(curso?.fechaFinal), 1), "dd-MM-yyyy") ?? ""}
-                          </h2>
-                          <h2>
-                            <span className="font-bold">Horario inicio: </span>
-                            {curso?.horario[0] ?? ""}
-                          </h2>
-                          <h2>
-                            <span className="font-bold">Días: </span>
-                            {curso?.dias.join(", ") ?? ""}
-                          </h2>
-                        </div>
-                      ))}
+                      <CheckboxGroup
+                        value={cursosSeleccionados}
+                        className="flex mx-auto justify-center"
+                        onChange={setCursosSeleccionados}
+                      >
+                        {usuarioSeleccionado?.cursos?.map((curso, index) => (
+                          <Checkbox value={curso} key={index} className="bg-slate-200 p-3 pr-8 m-1 rounded-lg">
+                            <h2>
+                              <span className="font-bold">Nombre:</span> {curso?.nombre ?? ""}
+                            </h2>
+                            <h2>
+                              <span className="font-bold">Descripcion: </span>
+                              {curso?.descripcion ?? ""}
+                            </h2>
+                            <h2>
+                              <span className="font-bold">Fecha Inicio:</span>{" "}
+                              {format(addDays(new Date(curso?.fechaInicio), 1), "dd-MM-yyyy") ?? ""}
+                            </h2>
+                            <h2>
+                              <span className="font-bold">Fecha Final:</span>{" "}
+                              {format(addDays(new Date(curso?.fechaFinal), 1), "dd-MM-yyyy") ?? ""}
+                            </h2>
+                            <h2>
+                              <span className="font-bold">Horario inicio: </span>
+                              {curso?.horario[0] ?? ""}
+                            </h2>
+                            <h2>
+                              <span className="font-bold">Horario Finaliza: </span>
+                              {curso?.horario[curso?.horario.length - 1] ?? ""}
+                            </h2>
+                            <h2>
+                              <span className="font-bold">Días: </span>
+                              {curso?.dias.join(", ") ?? ""}
+                            </h2>
+                          </Checkbox>
+                        ))}
+                      </CheckboxGroup>
                     </div>
                   </div>
                 </div>
               </ModalBody>
-              <ModalFooter>
-                <Button color="success" onClick={ActualizarDatosServer}>
-                  Actualizar datos
-                </Button>
+              <ModalFooter className="py-2 -mb-2">
+                {cursosSeleccionados.length === 0 ? null : (
+                  <Popover placement="top" color="warning" isOpen={popOver2}>
+                    <PopoverTrigger>
+                      <Button fullWidth color="warning" onClick={() => setPopOver2(true)}>
+                        Eliminar cursos
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">
+                          ¿Está seguro de querer eliminar los cursos seleccionados?
+                        </div>
+                        <div className="text-tiny">¡Esta acción no se puede deshacer!, ¿Desea continuar?</div>
+                        <div className="mx-auto m-2 text-center">
+                          <Button
+                            color="danger"
+                            className="mr-2"
+                            onClick={() => {
+                              EliminarCursosSeleccionados();
+                              setPopOver2(false);
+                            }}
+                          >
+                            Sí, deseo eliminarlo
+                          </Button>
+                          <Button color="primary" onClick={() => setPopOver2(false)}>
+                            Cancelar
+                          </Button>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
                 <Popover placement="top" color="danger" isOpen={popOver}>
                   <PopoverTrigger>
-                    <Button color="danger" onClick={() => setPopOver(true)}>
+                    <Button fullWidth color="danger" onClick={() => setPopOver(true)}>
                       Eliminar usuario
                     </Button>
                   </PopoverTrigger>
@@ -279,7 +357,13 @@ const ListaDocente = ({ data }) => {
                     </div>
                   </PopoverContent>
                 </Popover>
+              </ModalFooter>
+              <ModalFooter className="pt-2">
+                <Button fullWidth color="success" onClick={ActualizarDatosServer}>
+                  Actualizar datos
+                </Button>
                 <Button
+                  fullWidth
                   color="primary"
                   onPress={() => {
                     onClose();
