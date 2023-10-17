@@ -139,4 +139,97 @@ router.put("/user/delete/:id", async (req, res) => {
   }
 });
 
+// ======= DISPONIBILIDAD POR DOCENTE =======
+router.post("/user/comprobarDisponibilidad", async (req, res) => {
+  try {
+    const { fechaInicio, fechaFinal, horarioInicio, horarioFinal, IDdocente, dias } = req.body;
+
+    const usuario = await Usuario.findOne({ _id: IDdocente });
+
+    if (!usuario) {
+      return res.status(400).json({ mensaje: "Usuario no encontrado" });
+    }
+
+    const cursos = usuario.cursos;
+
+    for (const curso of cursos) {
+      if (
+        curso.fechaInicio <= fechaFinal &&
+        curso.fechaFinal >= fechaInicio &&
+        curso.dias.some((dia) => dias.includes(dia))
+      ) {
+        // Comprobación de colisión de fechas y días
+        if (
+          curso.horario.some(
+            (hora) =>
+              isWithinRange(hora, horarioInicio, horarioFinal) ||
+              isWithinRange(horarioInicio, hora, curso.horario[curso.horario.length - 1])
+          )
+        ) {
+          // Colisión de horarios
+          return res.status(200).json({ disponible: false, mensaje: `Colisión con el curso '${curso.nombre}'` });
+        }
+      }
+    }
+
+    // Si no se encontraron colisiones, entonces está disponible
+    res.status(200).json({ disponible: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error en el servidor" });
+  }
+});
+
+// ======= Buscar disponibilidad por nombre del taller =======
+router.post("/user/comprobarDisponibilidadPorTaller", async (req, res) => {
+  try {
+    const { fechaInicio, fechaFinal, horarioInicio, horarioFinal, nombreTaller, dias } = req.body;
+
+    const usuarios = await Usuario.find();
+
+    const usuariosConTaller = usuarios.filter((usuario) => {
+      const cursosConTaller = usuario.cursos.filter((curso) => curso.taller === nombreTaller);
+      return cursosConTaller.length > 0;
+    });
+
+    for (const usuario of usuariosConTaller) {
+      const cursos = usuario.cursos;
+
+      for (const curso of cursos) {
+        if (
+          curso.fechaInicio <= fechaFinal &&
+          curso.fechaFinal >= fechaInicio &&
+          curso.dias.some((dia) => dias.includes(dia))
+        ) {
+          // Comprobación de colisión de fechas y días
+          if (
+            curso.horario.some(
+              (hora) =>
+                isWithinRange(hora, horarioInicio, horarioFinal) ||
+                isWithinRange(horarioInicio, hora, curso.horario[curso.horario.length - 1])
+            )
+          ) {
+            // Colisión de horarios
+            return res.status(200).json({
+              disponible: false,
+              mensaje: `Colisión con el curso '${curso.nombre}' de ${usuario.nombre} ${usuario.apellido}`,
+            });
+          }
+        }
+      }
+    }
+
+    // Si no se encontraron colisiones, entonces está disponible
+    res.status(200).json({ disponible: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error en el servidor" });
+  }
+});
+
+// Función para verificar si un horario está dentro de un rango
+function isWithinRange(value, min, max) {
+  return value >= min && value <= max;
+}
+
 module.exports = router;

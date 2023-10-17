@@ -154,13 +154,15 @@ const AddCurso = () => {
       if (!response.ok) {
         throw new Error("Error al añadir el curso", {});
       }
+      const cursosFinal = docenteSeleccionado.cursos;
+      cursosFinal.push(datos);
 
       const response2 = await fetch(`${API_URL}/user/update/${docenteSeleccionado._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ cursos: datos }),
+        body: JSON.stringify({ cursos: cursosFinal }),
         credentials: "include",
       });
 
