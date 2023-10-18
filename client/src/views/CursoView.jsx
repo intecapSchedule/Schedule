@@ -34,32 +34,36 @@ const CursoView = () => {
   };
 
   if (usuario) {
-    return (
-      <div className="flex w-11/12 flex-col mx-auto">
-        <Tabs color="success">
-          <Tab key="courses" title="Lista de cursos">
-            <Card>
-              <CardBody>
-                <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-success">
-                  Listado de cursos
-                </h2>
-                <ListaCurso data={data} />
-              </CardBody>
-            </Card>
-          </Tab>
-          <Tab key="addCourse" title="Añadir Curso">
-            <Card>
-              <CardBody>
-                <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-success">
-                  Añadir nuevo curso
-                </h2>
-                <AddCurso />
-              </CardBody>
-            </Card>
-          </Tab>
-        </Tabs>
-      </div>
-    );
+    if (usuario.rol === "admin") {
+      return (
+        <div className="flex w-11/12 flex-col mx-auto">
+          <Tabs color="success">
+            <Tab key="courses" title="Lista de cursos">
+              <Card>
+                <CardBody>
+                  <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-success">
+                    Listado de cursos
+                  </h2>
+                  <ListaCurso data={data} />
+                </CardBody>
+              </Card>
+            </Tab>
+            <Tab key="addCourse" title="Añadir Curso">
+              <Card>
+                <CardBody>
+                  <h2 className="mb-4 text-3xl text-center font-extrabold  md:text-5xl lg:text-3xl dark:text-white text-success">
+                    Añadir nuevo curso
+                  </h2>
+                  <AddCurso />
+                </CardBody>
+              </Card>
+            </Tab>
+          </Tabs>
+        </div>
+      );
+    } else {
+      return <Navigate to="/" />;
+    }
   } else {
     return <Navigate to="/" />;
   }
