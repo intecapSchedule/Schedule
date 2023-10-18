@@ -288,7 +288,7 @@ router.delete("/user/deleteCursoEspecifico", async (req, res) => {
         if (curso.nombre === nombre && curso.descripcion === descripcion && curso.taller === taller) {
         } else {
           // Mantener el curso ya que no coincide con los parámetros
-          cursosActualizados.push("Datos finales", curso);
+          cursosActualizados.push(curso);
         }
       });
 

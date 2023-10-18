@@ -88,7 +88,7 @@ const DocentecursosDocente = () => {
     <>
       <div className="mx-auto w-11/12 relative border-1 shadow-md p-4 rounded-2xl mb-8">
         <h1 className="text-3xl font-bold text-center mb-3 -mt-1 text-primary">
-          Proyección de cursosDocente en el años
+          Proyección de cursos en el año en curso
         </h1>
         <div className="flex justify-between">
           {months.map((month) => (
