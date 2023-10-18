@@ -82,15 +82,21 @@ const ListaCurso = ({ data }) => {
         <TableHeader>
           <TableColumn className="font-bold text-lg">Ícono</TableColumn>
           <TableColumn className="font-bold text-lg">Nombre Curso</TableColumn>
-          <TableColumn className="font-bold text-lg">Duración</TableColumn>
-          <TableColumn className="font-bold text-lg">Horario</TableColumn>
+          <TableColumn className="font-bold text-lg" width={100}>
+            Duración
+          </TableColumn>
+          <TableColumn className="font-bold text-lg" width={120}>
+            Horario
+          </TableColumn>
           <TableColumn className="font-bold text-lg text-center" width="200">
             Días
           </TableColumn>
-          <TableColumn className="font-bold text-lg" width={3}>
-            Taller/Laboratorio
+          <TableColumn className="font-bold text-lg" width={150}>
+            Laboratorio
           </TableColumn>
-          <TableColumn className="font-bold text-lg">Docente</TableColumn>
+          <TableColumn className="font-bold text-lg" width={150}>
+            Docente
+          </TableColumn>
           <TableColumn className="font-bold text-lg text-center" align="center">
             Ver
           </TableColumn>
