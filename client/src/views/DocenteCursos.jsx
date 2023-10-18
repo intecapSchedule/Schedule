@@ -75,13 +75,13 @@ const DocentecursosDocente = () => {
 
   const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
   const diasColores = {
-    Lunes: "bg-[#94c8ff] text-black",
-    Martes: "bg-[#ff94c8] text-black",
-    Miércoles: "bg-[#c8ff94] text-black",
-    Jueves: "bg-[#8585ff] text-black",
-    Viernes: "bg-[#ff8585] text-black",
-    Sábado: "bg-[#85ff85] text-black",
-    Domingo: "bg-fuchsia-200 text-black",
+    Lunes: "bg-[#FFD700] text-black",
+    Martes: "bg-[#87CEEB] text-black",
+    Miércoles: "bg-[#98FB98] text-black",
+    Jueves: "bg-[#FFA07A] text-black",
+    Viernes: "bg-[#AFB6F1] text-black",
+    Sábado: "bg-[#D8BFD8] text-black",
+    Domingo: "bg-[#BFE4B5] text-black",
   };
 
   return (

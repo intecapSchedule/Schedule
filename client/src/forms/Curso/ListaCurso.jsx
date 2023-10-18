@@ -203,18 +203,14 @@ const ListaCurso = ({ data }) => {
                     isDisabled
                     type="text"
                     placeholder="Fecha Inicio"
-                    defaultValue={
-                      format(addDays(new Date(cursoSeleccionado?.fechaInicio), 1), "dd-MM-yyyy") ?? ""
-                    }
+                    defaultValue={format(addDays(new Date(cursoSeleccionado?.fechaInicio), 1), "dd-MM-yyyy") ?? ""}
                   />
                   <Input
                     label="Fecha Final"
                     isDisabled
                     type="text"
                     placeholder="Fecha Final"
-                    defaultValue={
-                      format(addDays(new Date(cursoSeleccionado?.fechaFinal), 1), "dd-MM-yyyy") ?? ""
-                    }
+                    defaultValue={format(addDays(new Date(cursoSeleccionado?.fechaFinal), 1), "dd-MM-yyyy") ?? ""}
                   />
                   <Input
                     label="Hora Inicio"
@@ -264,15 +260,13 @@ const ListaCurso = ({ data }) => {
                     <div className="px-1 py-2">
                       <div className="text-2xl text-center font-black">¡ATENCIÓN!</div>
                       <div className="text-small font-semibold">
-                        Si existen docentes que estén asignados a este curso, el curso será eliminado de su
-                        lista de cursos.
+                        Si existen docentes que estén asignados a este curso, el curso será eliminado de su lista de
+                        cursos.
                       </div>
                       <div className="text-small font-semibold">
                         Esto se hace con el propósito de evitar colisiones de horarios futuras
                       </div>
-                      <div className="text-small font-black text-center">
-                        ¿Está seguro que desea continuar?
-                      </div>
+                      <div className="text-small font-black text-center">¿Está seguro que desea continuar?</div>
                       <div className="text-small font-black text-center">
                         ¡¡Esta acción no se puede deshacer y no se podrá recuperar!!
                       </div>
