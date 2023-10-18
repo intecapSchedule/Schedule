@@ -165,7 +165,7 @@ const ListaCurso = ({ data }) => {
                     onOpen();
                     setCursoseleccionado(row);
                   }}
-                  color="primary"
+                  color="success"
                 >
                   Ver
                 </Button>
