@@ -60,16 +60,16 @@ const DocenteCursos = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center mb-3">Proyección de cursos en el año</h1>
-      <div className="mx-auto w-11/12 relative border-1 shadow-md p-4 rounded-2xl">
-        <div className="flex justify-between mb-2">
+      <div className="mx-auto w-11/12 relative border-1 shadow-md p-4 rounded-2xl mb-8">
+        <h1 className="text-3xl font-bold text-center mb-3 -mt-1 text-primary">Proyección de cursos en el año</h1>
+        <div className="flex justify-between">
           {months.map((month) => (
-            <div key={month.name} className="text-center w-1/12 border-1 overflow-hidden px-1">
+            <div key={month.name} className="text-center w-1/12 border-1 border-blue-600 overflow-hidden px-1">
               {month.name}
             </div>
           ))}
         </div>
-        <div className="relative border-1 overflow-hidden">
+        <div className="relative border-1 border-blue-600 rounded-b-lg overflow-hidden">
           {courses.map((course) => {
             const startDate = new Date(course.fechaInicio);
             const endDate = new Date(course.fechaFinal);
@@ -127,6 +127,9 @@ const DocenteCursos = () => {
             );
           })}
         </div>
+      </div>
+      <div className="mx-auto w-11/12 relative border-1 shadow-md p-4 rounded-2xl">
+        <h1 className="text-3xl font-bold text-center mb-3 -mt-1 text-primary">Lista de cursos</h1>
       </div>
     </>
   );
