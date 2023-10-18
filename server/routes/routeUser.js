@@ -169,9 +169,16 @@ router.post("/user/comprobarDisponibilidad", async (req, res) => {
           )
         ) {
           // Colisión de horarios
-          return res
-            .status(200)
-            .json({ disponible: false, mensaje: `Colisión con el curso '${curso.nombre}'` });
+          return res.status(403).json({
+            disponible: false,
+            mensaje: "Motivo: Colisión con el Docente " + curso.docente,
+            curso: curso.nombre,
+            fechaInicio: curso.fechaInicio,
+            fechaFinal: curso.fechaFinal,
+            dias: curso.dias,
+            horarioInicio: curso.horario[0],
+            horarioFinal: curso.horario[curso.horario.length - 1],
+          });
         }
       }
     }
@@ -214,9 +221,15 @@ router.post("/user/comprobarDisponibilidadPorTaller", async (req, res) => {
             )
           ) {
             // Colisión de horarios
-            return res.status(200).json({
+            return res.status(403).json({
               disponible: false,
-              mensaje: `Colisión con el curso '${curso.nombre}' de ${usuario.nombre} ${usuario.apellido}`,
+              mensaje: "Motivo: Colisión con " + nombreTaller,
+              curso: curso.nombre,
+              fechaInicio: curso.fechaInicio,
+              fechaFinal: curso.fechaFinal,
+              dias: curso.dias,
+              horarioInicio: curso.horario[0],
+              horarioFinal: curso.horario[curso.horario.length - 1],
             });
           }
         }
