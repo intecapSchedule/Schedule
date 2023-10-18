@@ -9,6 +9,7 @@ import Navibar from "./components/Navibar";
 import DocenteView from "./views/DocenteView";
 import CursoView from "./views/CursoView";
 import Taller from "./views/Taller";
+import DocenteCursos from "./views/DocenteCursos.jsx";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/docentes" element={<DocenteView />} />
         <Route path="/cursos" element={<CursoView />} />
         <Route path="/talleres" element={<Taller />} />
+        <Route path="/miscursos" element={<DocenteCursos />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
