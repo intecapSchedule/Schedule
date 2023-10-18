@@ -52,22 +52,7 @@ const DocentecursosDocente = () => {
 
   const totalDaysInYear = months.reduce((acc, month) => acc + month.days, 0);
 
-  const colores = [
-    "#4496f7",
-    "#459af8",
-    "#46a0f8",
-    "#48a5f8",
-    "#49a9f9",
-    "#4aaff9",
-    "#4cb4f9",
-    "#4db9fa",
-    "#4fbcfa",
-    "#50c2fa",
-    "#51c6fb",
-    "#E9F1FD",
-    "#FFFFFF",
-    "#FFFFF9",
-  ];
+  const colores = ["#50c2fa", "#51c6fb"];
 
   const getRandomColor = () => {
     return colores[Math.floor(Math.random() * colores.length)];
