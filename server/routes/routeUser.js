@@ -94,6 +94,27 @@ router.post("/user/getbyusername", async (req, res) => {
   }
 });
 
+// ======= obtener usuario por id =======
+
+// ======= actualizar un usuario por su id =======
+router.get("/user/getbyid/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const resultado = await Usuario.findById(id);
+
+    if (resultado) {
+      res.status(200).json(resultado.cursos);
+    } else {
+      res.status(404).json({ message: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      messageSys: error.message,
+    });
+  }
+});
+
 // ======= actualizar un usuario por su id =======
 router.put("/user/update/:id", async (req, res) => {
   try {

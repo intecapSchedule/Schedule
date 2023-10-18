@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import API_URL from "../config";
 
 const DocenteCursos = () => {
-  const courses = [
-    { nombre: "Curso de comida", fechaInicio: "2023-03-01", fechaFinal: "2023-04-01" },
-    { nombre: "Curso de mecánica", fechaInicio: "2023-05-01", fechaFinal: "2023-06-01" },
-    { nombre: "Curso de inglés", fechaInicio: "2023-07-08", fechaFinal: "2023-10-25" },
-    { nombre: "Curso de inglés avanzado", fechaInicio: "2023-11-01", fechaFinal: "2023-12-23" },
-    { nombre: "Curso de matemáticas", fechaInicio: "2023-01-10", fechaFinal: "2023-02-28" },
-    { nombre: "Curso de historia", fechaInicio: "2023-03-15", fechaFinal: "2023-04-30" },
-    { nombre: "Curso de programación", fechaInicio: "2023-05-10", fechaFinal: "2023-06-30" },
-    { nombre: "Curso de arte", fechaInicio: "2023-07-01", fechaFinal: "2023-08-31" },
-  ];
+  const [cursos, setCursos] = useState([]);
+
+  const obtenerCursos = async () => {
+    const usuario = JSON.parse(localStorage.getItem("demasdatosINTECAP"));
+    try {
+      const response = await fetch(`${API_URL}/user/getbyid/${usuario._id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        console.log("Error al obtener los cursos");
+        throw new Error("Error al filtrar los cursos", {});
+      }
+
+      const data = await response.json();
+      setCursos(data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    obtenerCursos();
+  }, []);
+
+  const courses = cursos;
 
   courses.sort((a, b) => new Date(a.fechaInicio) - new Date(b.fechaInicio));
 
@@ -32,26 +50,20 @@ const DocenteCursos = () => {
   const totalDaysInYear = months.reduce((acc, month) => acc + month.days, 0);
 
   const colores = [
-    "#FFFF99",
-    "#98FB98",
-    "#87CEEB",
-    "#FFB6C1",
-    "#E6E6FA",
-    "#FFDAB9",
-    "#40E0D0",
-    "#32CD32",
-    "#E6E6FA",
-    "#FFD700",
-    "#00CED1",
-    "#FFB6C1",
-    "#FFFF99",
-    "#87CEEB",
-    "#F5F5DC",
-    "#E6E6FA",
-    "#98FB98",
-    "#FF6B6B",
-    "#D3D3D3",
-    "#93C572",
+    "#4496f7",
+    "#459af8",
+    "#46a0f8",
+    "#48a5f8",
+    "#49a9f9",
+    "#4aaff9",
+    "#4cb4f9",
+    "#4db9fa",
+    "#4fbcfa",
+    "#50c2fa",
+    "#51c6fb",
+    "#E9F1FD",
+    "#FFFFFF",
+    "#FFFFF9",
   ];
 
   const getRandomColor = () => {
@@ -128,7 +140,7 @@ const DocenteCursos = () => {
           })}
         </div>
       </div>
-      <div className="mx-auto w-11/12 relative border-1 shadow-md p-4 rounded-2xl">
+      <div className="mx-auto w-11/12 relative border-1 shadow-md p-4 rounded-2xl mb-8">
         <h1 className="text-3xl font-bold text-center mb-3 -mt-1 text-primary">Lista de cursos</h1>
       </div>
     </>
