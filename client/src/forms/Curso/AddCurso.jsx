@@ -147,9 +147,7 @@ const AddCurso = () => {
         const horaFin = new Date(`2023-01-01T${horaFinal}`);
 
         while (horaActual <= horaFin) {
-          horasIntermedias.push(
-            horaActual.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
-          );
+          horasIntermedias.push(horaActual.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
           horaActual.setMinutes(horaActual.getMinutes() + 15);
         }
       } else {
@@ -405,7 +403,7 @@ const AddCurso = () => {
             <Checkbox value="Domingo">Domingo</Checkbox>
           </div>
         </CheckboxGroup>
-        <div className="flex flex-row gap-4 mb-8">
+        <div className="flex flex-row gap-4 mb-8 flex-wrap">
           <Select
             label="Docente"
             variant="bordered"
@@ -417,11 +415,7 @@ const AddCurso = () => {
           >
             {docentes.length > 0 ? (
               docentes.map((docente) => (
-                <SelectItem
-                  key={docente?._id}
-                  value={docente?.nombre}
-                  onPress={() => setDocenteSeleccionado(docente)}
-                >
+                <SelectItem key={docente?._id} value={docente?.nombre} onPress={() => setDocenteSeleccionado(docente)}>
                   {docente?.nombre + " " + docente?.apellido}
                 </SelectItem>
               ))
@@ -440,11 +434,7 @@ const AddCurso = () => {
           >
             {talleres.length > 0 ? (
               talleres.map((taller) => (
-                <SelectItem
-                  key={taller?._id}
-                  value={taller?.nombre}
-                  onPress={() => setTallerSeleccionado(taller)}
-                >
+                <SelectItem key={taller?._id} value={taller?.nombre} onPress={() => setTallerSeleccionado(taller)}>
                   {taller?.nombre ?? ""}
                 </SelectItem>
               ))
