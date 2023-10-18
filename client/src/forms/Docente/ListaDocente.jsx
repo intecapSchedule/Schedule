@@ -98,12 +98,11 @@ const ListaDocente = ({ data }) => {
 
   const handleEliminar = async (id) => {
     try {
-      const response = await fetch(`${API_URL}/user/delete/${usuarioSeleccionado?._id ?? id}`, {
-        method: "PUT",
+      const response = await fetch(`${API_URL}/user/delete/${usuarioSeleccionado?._id}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ estado: false }),
         credentials: "include",
       });
 
@@ -203,7 +202,8 @@ const ListaDocente = ({ data }) => {
               <ModalHeader className="flex flex-col gap-1">{usuarioSeleccionado?.nombre ?? ""}</ModalHeader>
               <ModalBody>
                 <h1 className="font-bold text-center text-xl text-gray-500">
-                  {"Información sobre " + usuarioSeleccionado?.nombre + " " + usuarioSeleccionado?.apellido ?? ""}
+                  {"Información sobre " + usuarioSeleccionado?.nombre + " " + usuarioSeleccionado?.apellido ??
+                    ""}
                 </h1>
                 <div className="flex flex-col gap-2 mt-4 w-full mx-auto">
                   <Input
@@ -268,7 +268,11 @@ const ListaDocente = ({ data }) => {
                         onChange={setCursosSeleccionados}
                       >
                         {usuarioSeleccionado?.cursos?.map((curso, index) => (
-                          <Checkbox value={curso} key={index} className="bg-slate-200 p-3 pr-8 m-1 rounded-lg">
+                          <Checkbox
+                            value={curso}
+                            key={index}
+                            className="bg-slate-200 p-3 pr-8 m-1 rounded-lg"
+                          >
                             <h2>
                               <span className="font-bold">Nombre:</span> {curso?.nombre ?? ""}
                             </h2>

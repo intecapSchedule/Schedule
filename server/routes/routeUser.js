@@ -124,16 +124,18 @@ router.put("/user/update/:id", async (req, res) => {
 });
 
 // ======= eliminar un usuario por su id =======
-router.put("/user/delete/:id", async (req, res) => {
+router.delete("/user/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const data = req.body;
-    const options = { new: true };
-    const resultado = await Usuario.findByIdAndUpdate(id, data, options);
-    res.status(200).json({ message: "Usuario Eliminado correctamente", resultado });
+    const resultado = await Usuario.findByIdAndRemove(id);
+    if (resultado) {
+      res.status(200).json({ message: "Usuario Eliminado correctamente", resultado });
+    } else {
+      res.status(404).json({ message: "Usuario no encontrado" });
+    }
   } catch (error) {
     res.status(500).json({
-      messageDev: "No se pudo eliminar al usuario",
+      messageDev: "No se pudo eliminar el Usuario",
       messageSys: error.message,
     });
   }
@@ -167,7 +169,9 @@ router.post("/user/comprobarDisponibilidad", async (req, res) => {
           )
         ) {
           // Colisión de horarios
-          return res.status(200).json({ disponible: false, mensaje: `Colisión con el curso '${curso.nombre}'` });
+          return res
+            .status(200)
+            .json({ disponible: false, mensaje: `Colisión con el curso '${curso.nombre}'` });
         }
       }
     }
@@ -236,36 +240,35 @@ function isWithinRange(value, min, max) {
 router.delete("/user/deleteCursoEspecifico", async (req, res) => {
   try {
     const { nombre, descripcion, docente, taller } = req.body;
-    // Buscar todos los docentes que tengan cursos con las 4 condiciones dadas
-    const docentes = await Usuario.find({
-      cursos: { $elemMatch: { nombre, descripcion, taller, docente } },
-    });
 
-    // console.log(docentes);
+    // Obtener todos los docentes
+    const docentes = await Usuario.find();
 
-    if (docentes.length === 0) {
-      return res.status(200).json({ message: "No se encontraron docentes con los cursos específicos" });
-    }
+    // Iterar a través de los docentes y sus cursos para eliminar los cursos que coinciden
+    docentes.forEach(async (docente) => {
+      const cursos = docente.cursos;
+      const cursosActualizados = [];
 
-    // Iterar a través de los docentes y eliminar el curso específico de cada uno
-    const promises = docentes.map(async (docente) => {
-      docente.cursos = docente.cursos.filter((curso) => {
-        return !(
-          curso.nombre === nombre &&
-          curso.descripcion === descripcion &&
-          curso.taller === taller &&
-          curso.docente === docente.nombre
-        );
+      cursos.forEach((curso) => {
+        // Verificar si el curso coincide con los parámetros
+        if (curso.nombre === nombre && curso.descripcion === descripcion && curso.taller === taller) {
+        } else {
+          // Mantener el curso ya que no coincide con los parámetros
+          cursosActualizados.push("Datos finales", curso);
+        }
       });
+
+      // Actualizar la lista de cursos del docente
+      docente.cursos = cursosActualizados;
+
+      // Guardar el docente actualizado en la base de datos
       await docente.save();
     });
 
-    await Promise.all(promises);
-
-    res.status(200).json({ message: "Curso eliminado correctamente de los docentes correspondientes" });
+    res.status(200).json({ message: "Cursos eliminados correctamente" });
   } catch (error) {
     res.status(500).json({
-      messageDev: "No se pudo eliminar el curso de los docentes",
+      messageDev: "No se pudieron eliminar los cursos",
       messageSys: error.message,
     });
   }
