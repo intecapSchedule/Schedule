@@ -145,8 +145,11 @@ const DocentecursosDocente = () => {
         <h1 className="text-3xl font-bold text-center mb-3 -mt-1 text-primary">Lista de cursos</h1>
         <div className="flex flex-row flex-wrap gap-4 justify-center">
           {/*Tarjeta*/}
-          {cursosDocente.map((curso) => (
-            <div className="rounded-xl bg-slate flex flex-col border-2 px-5 py-8 max-w-[260px] min-w-[260px] justify-between">
+          {cursosDocente.map((curso, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl bg-slate flex flex-col border-2 px-5 py-8 max-w-[260px] min-w-[260px] justify-between"
+            >
               <div>
                 <h1 className="text-xl font-bold whitespace-pre-wrap text-center">{curso?.nombre ?? ""}</h1>
               </div>
