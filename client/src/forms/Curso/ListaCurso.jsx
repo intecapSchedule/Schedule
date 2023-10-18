@@ -123,7 +123,8 @@ const ListaCurso = ({ data }) => {
               </TableCell>
               <TableCell>
                 <div>
-                  De: {row?.horario[0] ?? ""} <br /> A: {row?.horario[row?.horario.length - 1] ?? ""}
+                  De: {row?.horario[0] ?? ""} <br />
+                  A: &nbsp;&nbsp;{row?.horario[row?.horario.length - 1] ?? ""}
                 </div>
               </TableCell>
               <TableCell>
