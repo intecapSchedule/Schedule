@@ -16,6 +16,12 @@ connect();
 //Creamos el enrutador
 const app = express();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); 
+  //permite requests desde cualquier origen
+  next(); 
+});
+
 //usamos cors para evitar errores de CORS
 app.use(
   cors({
