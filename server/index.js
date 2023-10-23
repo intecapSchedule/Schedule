@@ -21,6 +21,7 @@ app.use(
   cors({
     origin: [
       "*",
+      "*",
       "http://127.0.0.1:3000",
       "http://localhost:3000",
       "http://127.0.0.1:5173",
@@ -29,6 +30,7 @@ app.use(
       "https://intecapscheduler.netlify.app/",
       "https://worried-colt-clothes.cyclic.app",
       "intecapscheduler.netlify.app",
+      "https://worried-colt-clothes.cyclic.app/api",
       "https://*.netlify.app",
       "*.netlify.app",
       "*.netlify.*",
