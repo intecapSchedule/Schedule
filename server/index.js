@@ -23,31 +23,14 @@ app.use((req, res, next) => {
 });
 
 //usamos cors para evitar errores de CORS
+//usamos cors para evitar errores de CORS
 app.use(
   cors({
-    origin: [
-      "*",
-      "*",
-      "http://127.0.0.1:3000",
-      "http://localhost:3000",
-      "http://127.0.0.1:5173",
-      "http://localhost:5173",
-      "127.0.0.1:3000",
-      "https://intecapscheduler.netlify.app/",
-      "https://worried-colt-clothes.cyclic.app",
-      "intecapscheduler.netlify.app",
-      "https://worried-colt-clothes.cyclic.app/api",
-      "https://*.netlify.app",
-      "*.netlify.app",
-      "*.netlify.*",
-      "*.app",
-      ".app",
-    ],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-    optionsSuccessStatus: 200,
   })
 );
+
 
 //importamos cookie parser
 app.use(cookieParser());
