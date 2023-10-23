@@ -23,14 +23,13 @@ app.use((req, res, next) => {
 });
 
 //usamos cors para evitar errores de CORS
-//usamos cors para evitar errores de CORS
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-     credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "https://intecapscheduler.netlify.app", 
+    "http://localhost:3000"
+  ],
+  credentials: true 
+}))
 
 
 //importamos cookie parser
