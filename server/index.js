@@ -8,7 +8,7 @@ const routesCurso = require("./routes/routeCurso");
 const routesTaller = require("./routes/routeTaller");
 
 // TOKEN
-const authenticateToken = require("./middleware/auth");
+//const authenticateToken = require("./middleware/auth");
 
 //Conectamos a la BD
 connect();
