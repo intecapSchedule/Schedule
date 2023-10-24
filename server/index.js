@@ -25,7 +25,9 @@ app.use((req, res, next) => {
 //usamos cors para evitar errores de CORS
 app.use(cors({
   origin: [
-    "https://intecapscheduler.netlify.app", 
+    "*",
+    "https://intecapscheduler.netlify.app",
+    "https://worried-colt-clothes.cyclic.app/",
     "http://localhost:3000"
   ],
   credentials: true 
