@@ -169,7 +169,7 @@ const ListaDocente = ({ data }) => {
                 <Avatar
                   showFallback
                   color="primary"
-                  fallback={(row?.nombre + " " + row?.apellido ?? "")
+                  fallback={(row?.nombre.replace(/\s/g, '') + " " + row?.apellido.replace(/\s/g, '') ?? "")
                     .split(" ")
                     .map((palabra) => palabra[0]?.toUpperCase()?? "")
                     .join("")}
