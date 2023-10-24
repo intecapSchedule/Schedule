@@ -171,7 +171,7 @@ const ListaDocente = ({ data }) => {
                   color="primary"
                   fallback={(row?.nombre + " " + row?.apellido ?? "")
                     .split(" ")
-                    .map((palabra) => palabra[0].toUpperCase())
+                    .map((palabra) => palabra[0]?.toUpperCase()?? "")
                     .join("")}
                 />
               </TableCell>
