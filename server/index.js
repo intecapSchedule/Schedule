@@ -17,28 +17,29 @@ connect();
 const app = express();
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); 
+  res.header("Access-Control-Allow-Origin", "*");
   //permite requests desde cualquier origen
-  next(); 
+  next();
 });
 
 //usamos cors para evitar errores de CORS
-app.use(cors({
-  origin: [
-    "*",
-    "https://intecapscheduler.netlify.app",
-    "https://worried-colt-clothes.cyclic.app/",
-    "http://localhost:3000"
-  ],
-  credentials: true 
-}))
-
+app.use(
+  cors({
+    origin: [
+      "*",
+      "https://intecapscheduler.netlify.app",
+      "https://worried-colt-clothes.cyclic.app/",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 
 //importamos cookie parser
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.send("Api Intecap Schedule!");
+  res.send("Api Intecap Schedule!!");
 });
 
 //usamos siempre el formato de JSON
